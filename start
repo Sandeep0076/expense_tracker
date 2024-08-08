@@ -1,0 +1,9 @@
+
+python -m venv env
+
+
+choose correct interpretr
+source exp_env/bin/activate
+ollama run llama3.1:8b
+Add env keys
+streamlit run main.py
