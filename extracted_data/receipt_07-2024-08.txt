@@ -1,0 +1,58 @@
+```json
+[
+  {
+    "Item": "Chiquita Bananen",
+    "Item Type": "Fruits",
+    "Quantity": "0.94 kg",
+    "Amount": "1.19 EUR/kg",
+    "Category": "Groceries",
+    "Store Name": "PENNY",
+    "Date": "02-08-2024"
+  },
+  {
+    "Item": "Avocado",
+    "Item Type": "Fruits",
+    "Quantity": "1",
+    "Amount": "1.29 EUR",
+    "Category": "Groceries",
+    "Store Name": "PENNY",
+    "Date": "02-08-2024"
+  },
+  {
+    "Item": "Bio-Kontaktlinsenlösung",
+    "Item Type": "Healthcare",
+    "Quantity": "1",
+    "Amount": "3.99 EUR",
+    "Category": "Healthcare",
+    "Store Name": "PENNY",
+    "Date": "02-08-2024"
+  },
+  {
+    "Item": "EIER M",
+    "Item Type": "Dairy",
+    "Quantity": "1",
+    "Amount": "1.59 EUR",
+    "Category": "Groceries",
+    "Store Name": "PENNY",
+    "Date": "02-08-2024"
+  },
+  {
+    "Item": "PENNY MILCH 3.5%",
+    "Item Type": "Dairy",
+    "Quantity": "1",
+    "Amount": "0.86 EUR",
+    "Category": "Groceries",
+    "Store Name": "PENNY",
+    "Date": "02-08-2024"
+  },
+  {
+    "Item": "BLUETENHONIG FL",
+    "Item Type": "Other",
+    "Quantity": "1",
+    "Amount": "2.99 EUR",
+    "Category": "Groceries",
+    "Store Name": "PENNY",
+    "Date": "02-08-2024"
+  }
+]
+```

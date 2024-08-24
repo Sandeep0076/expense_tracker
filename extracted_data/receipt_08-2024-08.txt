@@ -1,0 +1,14 @@
+```json
+[
+  {"Item": "Bananen", "Item Type": "Fruits", "Quantity": "0.334 kg", "Amount": "0.43", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "W.JERNB.ROSTBR.W", "Item Type": "Bakery", "Quantity": "1", "Amount": "3.49", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "VollkornToast", "Item Type": "Bakery", "Quantity": "1", "Amount": "0.99", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "WEIZEN TORTILLAS", "Item Type": "Bakery", "Quantity": "1", "Amount": "1.29", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "HUMMUS NATUR", "Item Type": "Groceries", "Quantity": "1", "Amount": "0.99", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "Mango", "Item Type": "Fruits", "Quantity": "1", "Amount": "1.29", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "ESL MILCH 3,5%", "Item Type": "Dairy", "Quantity": "2", "Amount": "2.10", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "SanFabio Lasagne", "Item Type": "Groceries", "Quantity": "1", "Amount": "1.89", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "APFELRINGE", "Item Type": "Snacks", "Quantity": "1", "Amount": "1.69", "Category": "Groceries", "Store Name": "PENNY MARKT", "Date": "05-08-2024"},
+  {"Item": "800 DUNKELBRAUN", "Item Type": "Other", "Quantity": "1", "Amount": "2.75", "Category": "Personal Care", "Store Name": "PENNY MARKT", "Date": "05-08-2024"}
+]
+```
