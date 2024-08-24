@@ -5,11 +5,17 @@ from PIL import Image
 from vision import extract_recipt_info
 import json
 import re
-from datetime import datetime
+from datetime import datetime, date
 
+def parse_quantity(quantity_str):
+    # Extract the numeric part of the quantity
+    match = re.match(r'^([\d.]+)', quantity_str)
+    if match:
+        return float(match.group(1))
+    return 1.0  # Default to 1 if parsing fails
 
 def save_azure_response(azure_response):
-    current_date = datetime.now().strftime("%d-%Y-%m")
+    current_date = date.today().strftime("%d-%Y-%m")
     filename = f"receipt_{current_date}.txt"
     os.makedirs("extracted_data", exist_ok=True)
     with open(os.path.join("extracted_data", filename), "w") as f:
@@ -26,6 +32,7 @@ def process_receipt(receipt_json):
             continue
     
     return None
+
 def display_editable_transactions(transactions):
     st.subheader("Receipt Analysis Results")
     
@@ -50,9 +57,7 @@ def extract_json_array(text):
     
     return None
 
-
 def update_transactions(transactions):
-    st.write("Entering update_transactions function")
     db = Database()
     updated_count = 0
     for transaction in transactions:
@@ -61,12 +66,12 @@ def update_transactions(transactions):
             db.add_transaction(
                 amount=float(transaction['Amount']),
                 category=transaction['Category'],
-                date=transaction['Date'],
+                date=datetime.strptime(transaction['Date'], '%d-%m-%Y').date(),
                 type='expense',
                 store_name=transaction['Store Name'],
                 item=transaction['Item'],
-                item_type=transaction['Item Type'],
-                quantity=float(transaction['Quantity'])
+                tags=transaction.get('Tags', '').split(','),
+                quantity=parse_quantity(transaction['Quantity'])
             )
             updated_count += 1
         except Exception as e:
@@ -76,30 +81,6 @@ def update_transactions(transactions):
         st.success(f"Added {updated_count} transactions to the database.")
     else:
         st.warning("No transactions were updated.")
-
-
-
-
-def process_receipt(receipt_json):
-    pattern = r'\[\s*\{[^]]*\}\s*\]'
-    matches = re.findall(pattern, receipt_json, re.DOTALL)
-    
-    for match in matches:
-        try:
-            return json.loads(match)
-        except json.JSONDecodeError:
-            continue
-    
-    return None
-
-def extract_numeric_value(value):
-    if isinstance(value, (int, float)):
-        return float(value)
-    elif isinstance(value, str):
-        numeric_part = re.search(r'\d+\.?\d*', value)
-        if numeric_part:
-            return float(numeric_part.group())
-    return 0.0
 
 def receipt_analysis_page():
     st.markdown("<h1 style='text-align: center;'>Receipt Analysis</h1>", unsafe_allow_html=True)
@@ -113,18 +94,18 @@ def receipt_analysis_page():
         if st.button('Analyze Receipt'):
             with st.spinner('Analyzing receipt...'):
                 try:
-                    #azure_response = extract_recipt_info(uploaded_file)
-                    file_path = 'extracted_data/receipt_07-2024-08.txt'
+                    azure_response = extract_recipt_info(uploaded_file)
+                    # file_path = 'extracted_data/receipt_07-2024-08.txt'
 
-                    with open(file_path, 'r') as file:
-                        azure_response = file.read()
+                    # with open(file_path, 'r') as file:
+                    #     azure_response = file.read()
                     transactions = process_receipt(azure_response)
                     
                     if transactions:
-                        # Convert quantities and amounts to numeric values, and dates to datetime
+                        # Convert quantities and amounts to numeric values, and dates to datetime.date objects
                         for transaction in transactions:
-                            transaction['Quantity'] = extract_numeric_value(transaction['Quantity'])
-                            transaction['Amount'] = extract_numeric_value(transaction['Amount'])
+                            transaction['Quantity'] = float(parse_quantity(transaction['Quantity']))
+                            transaction['Amount'] = float(parse_quantity(transaction['Amount']))
                             transaction['Date'] = datetime.strptime(transaction['Date'], '%d-%m-%Y').date()
                         
                         st.session_state.transactions = transactions
@@ -133,6 +114,8 @@ def receipt_analysis_page():
                         st.error("Failed to extract transactions from the receipt.")
                 except Exception as e:
                     st.error(f"An error occurred during analysis: {str(e)}")
+                    st.error("Please check your API key and internet connection, then try again.")
+    
     
     if 'transactions' in st.session_state:
         st.subheader("Receipt Analysis Results")
@@ -163,7 +146,7 @@ def receipt_analysis_page():
                     db.add_transaction(
                         amount=float(row['Amount']),
                         category=row['Category'],
-                        date=row['Date'].strftime('%d-%m-%Y'),
+                        date=row['Date'],
                         type='expense',
                         store_name=row['Store Name'],
                         item=row['Item'],
@@ -176,6 +159,7 @@ def receipt_analysis_page():
             
             if updated_count > 0:
                 st.success(f"Added {updated_count} transactions to the database.")
+                st.session_state.data_changed = True
                 del st.session_state.transactions
             else:
                 st.warning("No transactions were updated.")
